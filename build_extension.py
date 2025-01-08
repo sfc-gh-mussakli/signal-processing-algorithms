@@ -1,9 +1,15 @@
 """Build script for project installation."""
+
 import platform
+import os
+import shutil
 
-from typing import Dict
+from pathlib import Path
 
-from setuptools import Extension
+
+from setuptools import Extension, Distribution
+from setuptools.command.build_ext import build_ext
+
 
 ext_modules = [
     Extension(
@@ -16,6 +22,23 @@ ext_modules = [
 ]
 
 
-def build(setup_kwargs: Dict) -> None:
+def build() -> None:
     """Build the extensions."""
-    setup_kwargs.update({"ext_modules": ext_modules})
+    distribution = Distribution({"name": "package", "ext_modules": ext_modules})
+    cmd = build_ext(distribution)
+    cmd.ensure_finalized()
+    cmd.run()
+
+    for output in cmd.get_outputs():
+        output = Path(output)
+        relative_extension = Path("src") / output.relative_to(cmd.build_lib)
+
+        shutil.copyfile(output, relative_extension)
+        print(relative_extension)
+        mode = os.stat(relative_extension).st_mode
+        mode |= (mode & 0o444) >> 2
+        os.chmod(relative_extension, mode)
+
+
+if __name__ == "__main__":
+    build()

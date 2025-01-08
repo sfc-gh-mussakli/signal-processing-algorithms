@@ -15,7 +15,7 @@ license="Apache-2.0"
 repository="https://github.com/mongodb/signal-processing-algorithms"
 readme = "README.md"
 include = [
-    { path = "src/signal_processing_algorithms/energy_statistics/_e_divisive.cpython-310-darwin.so"}
+    { path = "src/signal_processing_algorithms/energy_statistics/_e_divisive.cpython-310-darwin.so", format=["sdist", "wheel"]}
 ]
 
 [tool.poetry.build]

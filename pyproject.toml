@@ -11,9 +11,9 @@ authors = [
     { name = "Jim O'Leary", email = "jim.oleary@mongodb.com" },
     { name = "Lydia Stepanek", email = "lydia.stepanek@mongodb.com" },
 ]
-license="Apache-2.0"
+license = { text = "Apache-2.0" }
 readme = "README.md"
-requires-python =">=3.10 <=3.11"
+requires-python =">=3.10,<=3.11"
 dependencies = [
     "more-itertools>=8.2.0",
     "numpy>=1.18.1",
@@ -27,8 +27,12 @@ dependencies = [
 repository="https://github.com/mongodb/signal-processing-algorithms"
 
 [tool.poetry]
+packages = [
+    { include = "signal_processing_algorithms", from = "src" },
+]
 include = [
-    { path = "src/signal_processing_algorithms/energy_statistics/*.so", format=["sdist", "wheel"]}
+    { path = "src/signal_processing_algorithms/energy_statistics/*.so" },
+    { path = "src/signal_processing_algorithms/energy_statistics/*.c" }
 ]
 
 [tool.poetry.build]

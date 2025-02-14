@@ -15,7 +15,7 @@ ext_modules = [
     Extension(
         "signal_processing_algorithms.energy_statistics._e_divisive",
         sources=["./src/signal_processing_algorithms/energy_statistics/e_divisive.c"],
-        extra_compile_args=["-O3"],
+        extra_compile_args=["-O3"] if "Darwin" in platform.system() else ["-O3", "-std=c99", "-c"],
         extra_link_args=[] if "Darwin" in platform.system() else ["-shared"],
         optional=True,
     )
